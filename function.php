@@ -472,4 +472,58 @@
         }
     }
 
+    if (isset($_POST['tambahuser'])) {
+        $username = htmlspecialchars($_POST["username"]); 
+        $password = htmlspecialchars($_POST["password"]);
+        //query insert data
+        $insert = mysqli_query($conn,"INSERT INTO user VALUES ('', '$username', '$password')");
+
+        if ($insert) {
+            header('Location: user.php');
+        }else{
+            echo "<script>
+                    alert('Gagal menambah user baru');
+                    window.location.href='user.php';
+                </script>";
+        }
+    }
+
+    //edit user
+    if (isset($_POST['edituser'])) {
+        $usn = $_POST['username'];
+        $pw = $_POST['password'];
+        $idu = $_POST['idu'];
+
+        $query = mysqli_query($conn,"UPDATE user set username='$usn', password='$pw' where iduser='$idu'");
+
+        if ($query) {
+            header('location: user.php');
+        }else{
+            echo "
+                <script>
+                    alert('Gagal Edit user!');
+                    window.location.href='user.php'
+                </script>
+            ";
+        }
+    }
+
+    //hapus user
+    if (isset($_POST['hapususer'])) {
+        $idu = $_POST['idu'];
+
+        $query = mysqli_query($conn,"DELETE FROM user where iduser='$idu'");
+
+        if ($query) {
+            header('location: user.php');
+        }else{
+            echo "
+                <script>
+                    alert('Gagal Edit user!');
+                    window.location.href='user.php'
+                </script>
+            ";
+        }
+    }
+
 ?>

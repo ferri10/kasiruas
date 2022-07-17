@@ -50,7 +50,7 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Kelola Pelanggan
                             </a>
-                            <a class="nav-link" href="pelanggan.php">
+                            <a class="nav-link" href="user.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 User
                             </a>
@@ -68,91 +68,87 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Data Pelanggan</h1>
+                        <h1 class="mt-4">Data User</h1>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item active">Selamat Datang</li>
                         </ol>
                         <div class="row">
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-primary text-white mb-4">
-                                    <div class="card-body">Jumlah Pelanggan: <?= $h2; ?></div>
+                                    <div class="card-body">Jumlah User: <?= $h2; ?></div>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-info mb-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                Tambah Pelanggan Baru
+                                Tambah User Baru
                         </button>
                         <div class="card mb-4">
 
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                Data Pesanan
+                                Data User
                             </div>
                             <div class="card-body">
                                 <table id="datatablesSimple">
                                     <thead>
                                         <tr>
                                             <th>No.</th>
-                                            <th>Nama Pelanggan</th>
-                                            <th>No. Telp</th>
-                                            <th>Alamat</th>
+                                            <th>Username</th>
+                                            <th>Password</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
 
                                         <?php 
-                                            $get = mysqli_query($conn, "SELECT * FROM pelanggan");
+                                            $get = mysqli_query($conn, "SELECT * FROM user");
 
                                             $i = 1;
 
                                             while($p=mysqli_fetch_array($get)){
-                                                $namapelanggan = $p['namapelanggan'];
-                                                $notelp = $p['notelp'];
-                                                $alamat = $p['alamat'];
-                                                $idpl = $p['idpelanggan'];
+                                                $username = $p['username'];
+                                                $password = $p['password'];
+                                                $idu = $p['iduser'];
                                         ?>
 
                                         <tr>
                                             <td><?= $i++; ?></td>
-                                            <td><?= $namapelanggan; ?></td>
-                                            <td><?= $notelp; ?></td>
-                                            <td><?= $alamat; ?></td>
+                                            <td><?= $username; ?></td>
+                                            <td><?= $password; ?></td>
                                             <td>
                                                 <!-- Button trigger modal -->
                                             <button type="button" class="btn btn-warning" data-bs-toggle="modal" 
-                                            data-bs-target="#edit<?= $idpl;?>">
+                                            data-bs-target="#edit<?= $idu;?>">
                                                     Edit
                                             </button> 
                                                 <!-- Button trigger modal -->
                                             <button type="button" class="btn btn-danger" data-bs-toggle="modal" 
-                                            data-bs-target="#delete<?= $idpl;?>">
+                                            data-bs-target="#delete<?= $idu;?>">
                                                     Delete
                                             </button>
                                             </td>
                                         </tr>
 
                                         <!-- Modal Edit--> 
-                                        <div class="modal fade" id="edit<?= $idpl;?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal fade" id="edit<?= $idu;?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Ubah<?= $namaproduk; ?></h5>
+                                                <h5 class="modal-title" id="exampleModalLabel">Ubah <?= $username; ?></h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
 
                                             <form action="" method="post">
 
                                             <div class="modal-body">
-                                            <input type="text" name="namapelanggan" class="form-control" placeholder="Nama Pelanggan" value="<?= $namapelanggan; ?>">
-                                                    <input type="text" name="notelp" class="form-control mt-2" placeholder="No. Telp" value="<?= $notelp; ?>">
-                                                    <input type="text" name="alamat" class="form-control mt-2" placeholder="Alamat" value="<?= $alamat; ?>">
-                                                    <input type="hidden" name="idpl" value="<?= $idpl; ?>">
+                                            <input type="text" name="username" class="form-control" placeholder="Username" value="<?= $username; ?>">
+                                                    <input type="text" name="password" class="form-control mt-2" placeholder="Password" value="<?= $password; ?>">
+                                                    <input type="hidden" name="idu" value="<?= $idu; ?>">
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="submit" class="btn btn-success" name="editpelanggan">Submit</button> 
+                                                <button type="submit" class="btn btn-success" name="edituser">Submit</button> 
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                             </div>
 
@@ -163,22 +159,22 @@
                                         </div>
 
                                         <!-- Modal Delete-->
-                                        <div class="modal fade" id="delete<?= $idpl;?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal fade" id="delete<?= $idu;?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Hapus <?= $namapelanggan; ?></h5>
+                                                <h5 class="modal-title" id="exampleModalLabel">Hapus <?= $username; ?></h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
 
                                             <form action="" method="post">
 
                                             <div class="modal-body">
-                                                Apakah anda ingin menghapus pelanggan ini
-                                                <input type="hidden" name="idpl" value="<?= $idpl; ?>">
+                                                Apakah anda ingin menghapus user ini
+                                                <input type="hidden" name="idu" value="<?= $idu; ?>">
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="submit" class="btn btn-success" name="hapuspelanggan">Submit</button> 
+                                                <button type="submit" class="btn btn-success" name="hapususer">Submit</button> 
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                             </div>
 
@@ -227,19 +223,18 @@
     <div class="modal-dialog">
         <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Tambah Barang Baru</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Tambah User Baru</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
 
         <form action="" method="post">
 
         <div class="modal-body">
-            <input type="text" name="namapelanggan" class="form-control" placeholder="namapelanggan">
-            <input type="text" name="notelp" class="form-control mt-2" placeholder="notelp">
-            <input type="text" name="alamat" class="form-control mt-2" placeholder="alamat">
+            <input type="text" name="username" class="form-control" placeholder="username">
+            <input type="text" name="password" class="form-control mt-2" placeholder="password">
         </div>
         <div class="modal-footer">
-            <button type="submit" class="btn btn-success" name="tambahpelanggan">Submit</button> 
+            <button type="submit" class="btn btn-success" name="tambahuser">Submit</button> 
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         </div>
 

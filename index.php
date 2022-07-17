@@ -50,7 +50,7 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Kelola Pelanggan
                             </a>
-                            <a class="nav-link" href="pelanggan.php">
+                            <a class="nav-link" href="user.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 User
                             </a>
