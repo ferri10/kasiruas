@@ -2,8 +2,8 @@
 
     require 'ceklogin.php';
 
-    //hitung jumlah pesanan
-    $h1 = mysqli_query($conn, "SELECT * FROM pesanan");
+    //hitung jumlah pelanggan
+    $h1 = mysqli_query($conn, "SELECT * FROM user");
     $h2 = mysqli_num_rows($h1); //jumlah pesanan
 
 ?>
@@ -16,7 +16,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Data Pesanan</title>
+        <title>Data Pelanggan</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
@@ -46,7 +46,7 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Barang Masuk
                             </a>
-                            <a class="nav-link" href="masuk.php">
+                            <a class="nav-link" href="pelanggan.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Kelola Pelanggan
                             </a>
@@ -68,90 +68,118 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Data Pesanan</h1>
+                        <h1 class="mt-4">Data Pelanggan</h1>
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active">Selamat Dtang</li>
+                            <li class="breadcrumb-item active">Selamat Datang</li>
                         </ol>
                         <div class="row">
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-primary text-white mb-4">
-                                    <div class="card-body">Jumlah Pesanan: <?= $h2; ?></div>
+                                    <div class="card-body">Jumlah Pelanggan: <?= $h2; ?></div>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-info mb-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                Tambah Pesanan Baru
+                                Tambah Pelanggan Baru
                         </button>
-
                         <div class="card mb-4">
+
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                DataTable Example
+                                Data Pesanan
                             </div>
                             <div class="card-body">
                                 <table id="datatablesSimple">
                                     <thead>
                                         <tr>
-                                            <th>Id Pesanan</th>
-                                            <th>Tanggal</th>
+                                            <th>No.</th>
                                             <th>Nama Pelanggan</th>
-                                            <th>Jumlah</th>
-                                            <th></a>Aksi</th>
+                                            <th>No. Telp</th>
+                                            <th>Alamat</th>
+                                            <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
 
                                         <?php 
-                                            $get = mysqli_query($conn, "SELECT * FROM pesanan p, pelanggan pl where p.idpelanggan = pl.idpelanggan");
+                                            $get = mysqli_query($conn, "SELECT * FROM pelanggan");
 
                                             $i = 1;
 
                                             while($p=mysqli_fetch_array($get)){
-                                                $idorder = $p['idorder'];
-                                                $tanggal = $p['tanggal'];
                                                 $namapelanggan = $p['namapelanggan'];
+                                                $notelp = $p['notelp'];
                                                 $alamat = $p['alamat'];
-                                                
-                                                //hitung jumlah
-                                                $hitungjumlah = mysqli_query($conn, "SELECT * FROM detailpesanan where idpesanan='$idorder'");
-                                                $jumlah = mysqli_num_rows($hitungjumlah); 
+                                                $idpl = $p['idpelanggan'];
                                         ?>
 
                                         <tr>
-                                            <td><?= $idorder; ?></td>
-                                            <td><?= $tanggal; ?></td>
-                                            <td><?= $namapelanggan; ?> - <?= $alamat; ?></td>
-                                            <td><?= $jumlah; ?></td>
+                                            <td><?= $i++; ?></td>
+                                            <td><?= $namapelanggan; ?></td>
+                                            <td><?= $notelp; ?></td>
+                                            <td><?= $alamat; ?></td>
                                             <td>
-                                                <a href="view.php?idp=<?= $idorder; ?>" class="btn btn-primary" target="blank">Tampilkan</a>
                                                 <!-- Button trigger modal -->
-                                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" 
-                                                data-bs-target="#delete<?= $idorder;?>">
-                                                        Delete
-                                                </button>
+                                            <button type="button" class="btn btn-warning" data-bs-toggle="modal" 
+                                            data-bs-target="#edit<?= $idpl;?>">
+                                                    Edit
+                                            </button> 
+                                                <!-- Button trigger modal -->
+                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" 
+                                            data-bs-target="#delete<?= $idpl;?>">
+                                                    Delete
+                                            </button>
                                             </td>
                                         </tr>
 
-                                        <!-- Modal Delete-->
-                                        <div class="modal fade" id="delete<?= $idorder;?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <!-- Modal Edit--> 
+                                        <div class="modal fade" id="edit<?= $idpl;?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Hapus Data Pesanan</h5>
+                                                <h5 class="modal-title" id="exampleModalLabel">Ubah<?= $namaproduk; ?></h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
 
                                             <form action="" method="post">
 
                                             <div class="modal-body">
-                                                Apakah anda ingin menghapus data ini
-                                                <input type="hidden" name="ido" value="<?= $idorder; ?>">
+                                            <input type="text" name="namapelanggan" class="form-control" placeholder="Nama Pelanggan" value="<?= $namapelanggan; ?>">
+                                                    <input type="text" name="notelp" class="form-control mt-2" placeholder="No. Telp" value="<?= $notelp; ?>">
+                                                    <input type="text" name="alamat" class="form-control mt-2" placeholder="Alamat" value="<?= $alamat; ?>">
+                                                    <input type="hidden" name="idpl" value="<?= $idpl; ?>">
                                             </div>
                                             <div class="modal-footer">
-                                            <button type="submit" class="btn btn-success" name="hapusorder">Submit</button> 
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-success" name="editpelanggan">Submit</button> 
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            </div>
+
+                                            </form>
+
+                                            </div>
+                                        </div>
+                                        </div>
+
+                                        <!-- Modal Delete-->
+                                        <div class="modal fade" id="delete<?= $idpl;?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Hapus <?= $namapelanggan; ?></h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+
+                                            <form action="" method="post">
+
+                                            <div class="modal-body">
+                                                Apakah anda ingin menghapus pelanggan ini
+                                                <input type="hidden" name="idpl" value="<?= $idpl; ?>">
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-success" name="hapuspelanggan">Submit</button> 
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                             </div>
 
                                             </form>
@@ -163,6 +191,7 @@
                                         <?php 
                                             }; //end of while
                                         ?>
+
 
                                     </tbody>
                                 </table>
@@ -198,37 +227,20 @@
     <div class="modal-dialog">
         <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Tambah Pesanan Baru</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Tambah Barang Baru</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
 
         <form action="" method="post">
 
         <div class="modal-body">
-            Pilih Pelanggan
-            <select name="idpelanggan" id="" class="form-control">
-
-            <?php 
-                
-                $getpelanggan = mysqli_query($conn, "SELECT * FROM pelanggan");
-                        
-                while($pl = mysqli_fetch_array($getpelanggan)){
-                    $namapelanggan = $pl['namapelanggan'];
-                    $idpelanggan = $pl['idpelanggan'];
-                    $alamat = $pl['alamat'];
-            ?>
-
-                <option value="<?= $idpelanggan; ?>"><?= $namapelanggan; ?> - <?= $alamat; ?></option>
-
-            <?php 
-                };
-            ?>
-
-            </select>
+            <input type="text" name="namapelanggan" class="form-control" placeholder="namapelanggan">
+            <input type="text" name="notelp" class="form-control mt-2" placeholder="notelp">
+            <input type="text" name="alamat" class="form-control mt-2" placeholder="alamat">
         </div>
         <div class="modal-footer">
-        <button type="submit" class="btn btn-success" name="tambahpesanan">Submit</button> 
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-success" name="tambahpelanggan">Submit</button> 
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         </div>
 
         </form>
@@ -236,5 +248,4 @@
         </div>
     </div>
     </div>
-
 </html>
