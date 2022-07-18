@@ -25,7 +25,7 @@
         }
     }
 
-
+    
     if (isset($_POST['tambahbarang'])) {
         $namaproduk = htmlspecialchars($_POST["namaproduk"]); 
         $deskripsi = htmlspecialchars($_POST["deskripsi"]);
