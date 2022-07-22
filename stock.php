@@ -239,6 +239,7 @@
 
         <div class="modal-body">
         <input type="text" name="namaproduk" class="form-control" placeholder="Nama Produk">
+        <input type="text" name="namamerk" class="form-control" placeholder="Nama Merk">
                 <input type="text" name="deskripsi" class="form-control mt-2" placeholder="Deskripsi">
                 <input type="number" name="stock" class="form-control mt-2" placeholder="Stock Awal" min="1" required>
                 <input type="number" name="harga" class="form-control mt-2" placeholder="Harga Produk" min="1" required>

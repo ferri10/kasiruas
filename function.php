@@ -31,10 +31,11 @@
         $deskripsi = htmlspecialchars($_POST["deskripsi"]);
         $harga = htmlspecialchars($_POST["harga"]);
         $stock = htmlspecialchars($_POST["stock"]);
+        $namamerk = htmlspecialchars($_POST["namamerk"]);
 
         //query insert data
         $insert = mysqli_query($conn,"INSERT INTO produk VALUES ('', '$namaproduk', '$deskripsi', '$harga', 
-        '$stock')");
+        '$stock', '$namamerk')");
 
         if ($insert) {
             header('Location: stock.php');
